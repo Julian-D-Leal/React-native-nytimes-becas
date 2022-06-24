@@ -1,18 +1,39 @@
 import React, {useState, useEffect} from 'react';
-import { View , Text, StyleSheet} from 'react-native';
+import { View , Text, StyleSheet,Button} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import axios from 'axios';
 import { Card } from "react-native-paper";
+import ModalW from './Modal'
+
+const activeItem ={
+    nombre: "",
+    categoria: "",
+    porcentaje: 0,
+    pais: "",
+    universidad: "",
+    requerimientos: "",
+    vistas:0
+}
 
 export default function Popular(){
-
+    const [modal, setModal] = useState(false);
     const [becas, setBecas] = useState([]);
+    const [active,setActive] = useState(activeItem);
     //URL: la URL de tu endpoint API
     let postBecas = () => {
         axios
-        .get("http://192.168.20.172:8000/becas/list/")
+        .get("http://192.168.20.60:8000/becas/list/")
         .then(res => setBecas(res.data))
         .catch(err => console.log(err))
+    }
+
+    const detallarItem= (item) => {
+        setModal(true);
+        setActive(item);
+    }
+
+    const toggle= () => {
+        setModal(!modal);
     }
     
     useEffect(()=>{
@@ -33,7 +54,15 @@ export default function Popular(){
                     <Text style={styles.title}>{item.nombre}</Text>
                     <Text >{item.universidad}</Text>
                     <Text style={styles.p}>{item.pais}</Text>
+                    <Button title='detalles' onPress={() =>detallarItem(item)} /> 
                 </View>
+                {modal
+            ?
+            <ModalW 
+                activeItem={active}
+                toggle={toggle}
+                visible={modal}/>
+            : null}
             </View>
           </Card>
         )
@@ -47,7 +76,6 @@ export default function Popular(){
                 layout="car"
                 data={orden.slice(0,3)}
                 renderItem={renderItem}
-                inactiveSlideShift={true}
             />
         </View>
         

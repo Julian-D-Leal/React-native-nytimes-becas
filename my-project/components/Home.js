@@ -27,7 +27,7 @@ const Drawer = createDrawerNavigator();
 export default function MyDrawer() {
     return (
       <Drawer.Navigator initialRouteName="Wombat news">
-        <Drawer.Screen name="Wombat news" component={HomeScreen} />
+        <Drawer.Screen name="Wombat Becas" component={HomeScreen} />
         <Drawer.Screen name="Login" component={Log} />
       </Drawer.Navigator>
     );

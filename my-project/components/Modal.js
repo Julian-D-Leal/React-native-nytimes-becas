@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 
 const ModalW = ({activeItem, visible}) => {
   const [modalVisible, setModalVisible] = useState(visible);
+  const [tipo, setATipo] = useState(activeItem.categoria);
+  
+  let a= () => {
+    if(tipo === 1) {
+      setATipo("Nacional")
+    }else{
+      setATipo("internacional")
+    }
+  }
+  useEffect(()=>{
+    a()
+  },[]);
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -22,7 +34,7 @@ const ModalW = ({activeItem, visible}) => {
               <Text style={styles.modalText}>X</Text>
             </Pressable> 
             <Text style={styles.modalText}>Nombre: {activeItem.nombre}</Text>
-            <Text style={styles.modalText}>Categoria: {activeItem.categoria}</Text>
+            <Text style={styles.modalText}>Categoria: {tipo}</Text>
             <Text style={styles.modalText}>Porcentaje: {activeItem.porcentaje}</Text>
             <Text style={styles.modalText}>País: {activeItem.pais}</Text>
             <Text style={styles.modalText}>Universidad: {activeItem.universidad}</Text>
@@ -44,9 +56,10 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
-        padding: 35,
+        padding: 10,
         alignItems: "center",
         shadowColor: "#000",
+        width: 200,
         shadowOffset: {
             width: 0,
             height: 2
@@ -56,7 +69,8 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     button: {
-        borderRadius: 20,
+        borderRadius: 15,
+        height: 35
     },
         buttonOpen: {
         backgroundColor: "#F194FF",
@@ -64,9 +78,9 @@ const styles = StyleSheet.create({
     buttonClose: {
         backgroundColor: "#ff110c",
         width: 40,
-        marginLeft: 90,
+        marginLeft: 150,
         alignItems: "center",
-        paddingTop: 10,
+        paddingTop: 5,
     },
     textStyle: {
         color: "white",

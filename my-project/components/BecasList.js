@@ -22,7 +22,7 @@ export default function Becas(){
 
     let postBecas = () => {
         axios
-        .get("http://192.168.20.172:8000/becas/list/")
+        .get("http://192.168.20.60:8000/becas/list/")
         .then(res => setBecas(res.data))
         .catch(err => console.log(err))
     }
@@ -54,14 +54,14 @@ export default function Becas(){
     
     return (
         <View>
-            <View>
+            <View style={styles.a}>
                 <Button title='Nacionales' onPress={() => display(false)}/>
                 
                 <Button title='Internacional' onPress={() =>display(true)}/>
             </View>
             <View style={styles.tarjetas}>
                 {int.map((item) =>(
-                    <Card key={item.id} style={styles.box} onPress={() => detallarItem(item)}> 
+                    <Card key={item.id} style={styles.box}> 
                         <View>
                             <View >
                                 <Text style={styles.title}>{item.nombre}</Text>
@@ -77,8 +77,8 @@ export default function Becas(){
             ?
             <ModalW 
                 activeItem={active}
+                toggle={toggle}
                 visible={modal}/>
-
             : null}
         </View>
       );
@@ -110,5 +110,8 @@ const styles = StyleSheet.create({
         margin: 10,
         marginBottom: 50,
     },
+    a:{
+        marginTop: 10,
+    }
 
 });
