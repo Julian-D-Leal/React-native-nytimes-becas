@@ -1,14 +1,12 @@
 import * as React from 'react';
-import Log from './Login';
+import Login from './Login';
 import News from './ny'
 import Popular from './Popular'
 import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Text, StyleSheet, ScrollView } from 'react-native';
 import Becas from './BecasList';
-
-
 
 function HomeScreen({ navigation }) {
     return (
@@ -26,9 +24,9 @@ const Drawer = createDrawerNavigator();
 
 export default function MyDrawer() {
     return (
-      <Drawer.Navigator initialRouteName="Wombat news">
+      <Drawer.Navigator initialRouteName="Login">
         <Drawer.Screen name="Wombat Becas" component={HomeScreen} />
-        <Drawer.Screen name="Login" component={Log} />
+        <Drawer.Screen name="Login" component={Login} />
       </Drawer.Navigator>
     );
   }

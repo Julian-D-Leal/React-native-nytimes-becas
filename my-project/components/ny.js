@@ -49,7 +49,7 @@ export default function News(){
         layout="car"
         data={data.slice(3,8)}
         renderItem={renderItem}
-        inactiveSlideShift={true}
+        inactiveSlideShift={1}
         />
       );
   }
@@ -77,7 +77,7 @@ export default function News(){
         height: 400
     },
     image:{
-        width: 450,
+        width: 350,
         height: 250,
         resizeMode: 'cover',
     }

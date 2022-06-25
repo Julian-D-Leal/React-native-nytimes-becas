@@ -1,56 +1,81 @@
-import React, { Component } from 'react';
-import { Alert, Button, TextInput, View, StyleSheet, Text } from 'react-native';
+import React,{useState, useEffect} from 'react';
+import { ScrollView, Button, TextInput, View, StyleSheet, Text, Pressable } from 'react-native';
+import axios from 'axios';
+import Admin from './DashBoard'
+import Constants from '../path'
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      username: '',
-      password: '',
-    };
-  }
+
+export default function Login({ navigation }) {
+
+  const [user, setUser] = useState([])
+  const [username, setUsername] = useState('')
+  const [pass, setPass] = useState('')
+  const [active, setActive] = useState(false)
   
-  onLogin() {
-    const { username, password } = this.state;
 
-    Alert.alert('Credentials', `${username} + ${password}`);
+  const Users = () => {
+    axios
+    .get("http://"+Constants.RUTA+"/becas/users/")
+    .then(res => setUser(res.data))
+    .catch(err => console.log(err))
   }
 
-  render() {
+  useEffect(() => {
+    Users();
+  }, [])
+
+  const onLogin = () => {
+    let int = user.filter(
+      (item) => item.username === username && item.password === pass)
+    if(int.length === 1){
+      setActive(true);
+      alert('Credenciales correctas');
+    }else alert('contraseña incorrecta');
+  }
+
     return (
-      <View>
-        <View style={styles.container}>
+      <ScrollView>
+        {!active ? <View style={styles.container}>
+          <View >
           <Text style={styles.title}>Inicio de sesion</Text>
           <TextInput
-            value={this.state.username}
-            onChangeText={(username) => this.setState({ username })}
+            value={username}
+            onChangeText={setUsername}
             placeholder={'Username'}
             style={styles.input}
           />
           <TextInput
-            value={this.state.password}
-            onChangeText={(password) => this.setState({ password })}
+            value={pass}
+            onChangeText={setPass}
             placeholder={'Password'}
             secureTextEntry={true}
             style={styles.input}
           />
-        </View>
-        <View style={{marginBottom: 10}}>
+          </View>
+          <View style={{marginBottom: 10}}>
           <Button
               title={'Login'}
-              onPress={this.onLogin.bind(this)}
+              onPress={() => onLogin()}
             />
         </View>
         <View>
           <Button
-            title={'Registrarse'}
-            onPress={this.onLogin.bind(this)}
+            title={'Regresar'}
+            onPress={() => navigation.goBack()}
           />
         </View>
-      </View>
+        </View>
+        :
+        <View>
+          <Pressable onPress={() =>setActive(false)} style={styles.buttonClose}>
+            <Text>Cerrar Sesión</Text>
+          </Pressable>
+          <Admin />
+        </View>
+
+        }
+      </ScrollView>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -74,4 +99,27 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: 'Roboto',
   },
+  buttonClose: {
+    backgroundColor: "#ff110c",
+    width: 150,
+    marginLeft: 240,
+    alignItems: "center",
+    paddingTop: 5,
+    borderRadius: 15,
+    height: 35,
+},
+buttonAdd: {
+  backgroundColor: '#74c468',
+  width: 150,
+  alignItems: "center",
+  paddingTop: 5,
+  borderRadius: 15,
+  height: 35,
+  marginLeft: 3,
+},
+row: {
+  flexDirection: "row",
+  flexWrap: "wrap",
+  borderRadius: 15,
+},
 });

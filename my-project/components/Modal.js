@@ -1,8 +1,7 @@
 import React, { useState,useEffect } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
 
-const ModalW = ({activeItem, visible}) => {
-  const [modalVisible, setModalVisible] = useState(visible);
+const ModalW = ({activeItem, toggle, active}) => {
   const [tipo, setATipo] = useState(activeItem.categoria);
   
   let a= () => {
@@ -20,15 +19,12 @@ const ModalW = ({activeItem, visible}) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!visible);
-        }}
+        visible={active}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
           <Pressable
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => toggle()}
               style={[styles.buttonClose,styles.button]}
             >    
               <Text style={styles.modalText}>X</Text>
@@ -50,7 +46,6 @@ const styles = StyleSheet.create({
     centeredView: {
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 200,
     },
     modalView: {
         margin: 20,
@@ -60,6 +55,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         shadowColor: "#000",
         width: 200,
+        marginTop: 250,
         shadowOffset: {
             width: 0,
             height: 2
@@ -72,8 +68,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         height: 35
     },
-        buttonOpen: {
-        backgroundColor: "#F194FF",
+    buttonOpen: {
+      backgroundColor: "#F194FF",
     },
     buttonClose: {
         backgroundColor: "#ff110c",
@@ -91,7 +87,6 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: "center"
     }
-
 });
 
 export default ModalW;

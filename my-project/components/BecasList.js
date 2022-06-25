@@ -3,6 +3,7 @@ import { View , Text, StyleSheet, Button} from 'react-native';
 import { Card } from "react-native-paper";
 import axios from 'axios';
 import ModalW from './Modal'
+import Constants from '../path'
 
 const activeItem ={
     nombre: "",
@@ -22,9 +23,18 @@ export default function Becas(){
 
     let postBecas = () => {
         axios
-        .get("http://192.168.20.60:8000/becas/list/")
+        .get("http://"+Constants.RUTA+"/becas/list/")
         .then(res => setBecas(res.data))
         .catch(err => console.log(err))
+    }
+
+    let popularidad = (item) => {
+        let activo = item;
+        activo.vistas += 1;
+        setActive(activo);
+        let code = activo.id;
+        axios
+        .put("http://"+Constants.RUTA+"/becas/list/"+code+"/", activo);
     }
 
     const display = status => {
@@ -38,10 +48,11 @@ export default function Becas(){
     const detallarItem= (item) => {
         setModal(true);
         setActive(item);
+        popularidad(item);
     }
 
     const toggle= () => {
-        setModal(!modal);
+        setModal(false);
     }
 
     useEffect(()=>{
@@ -56,7 +67,6 @@ export default function Becas(){
         <View>
             <View style={styles.a}>
                 <Button title='Nacionales' onPress={() => display(false)}/>
-                
                 <Button title='Internacional' onPress={() =>display(true)}/>
             </View>
             <View style={styles.tarjetas}>
@@ -73,13 +83,12 @@ export default function Becas(){
                     </Card>
                 ))}
             </View>
-            {modal
-            ?
-            <ModalW 
+            {modal &&
+                 <ModalW 
                 activeItem={active}
-                toggle={toggle}
-                visible={modal}/>
-            : null}
+                active={modal}
+                toggle={toggle}/>
+            }
         </View>
       );
 }
@@ -113,5 +122,4 @@ const styles = StyleSheet.create({
     a:{
         marginTop: 10,
     }
-
 });
