@@ -46,7 +46,7 @@ export default function News(){
         <Carousel 
         sliderWidth={300}
         itemWidth={300}
-        layout="car"
+        layout="default"
         data={data.slice(3,8)}
         renderItem={renderItem}
         inactiveSlideShift={1}

@@ -23,7 +23,7 @@ export default function Popular(){
     //URL: la URL de tu endpoint API
     let postBecas = () => {
         axios
-        .get("http://"+Constants.RUTA+"/becas/list/")
+        .get("https://restframeworkbecasandlogin.herokuapp.com/becas/list/")
         .then(res => setBecas(res.data))
         .catch(err => console.log(err))
     }
@@ -77,7 +77,7 @@ export default function Popular(){
             <Carousel 
                 sliderWidth={300}
                 itemWidth={300}
-                layout="car"
+                layout="default"
                 data={orden.slice(0,3)}
                 renderItem={renderItem}
             />

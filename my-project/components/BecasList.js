@@ -23,7 +23,7 @@ export default function Becas(){
 
     let postBecas = () => {
         axios
-        .get("http://"+Constants.RUTA+"/becas/list/")
+        .get("https://restframeworkbecasandlogin.herokuapp.com/becas/list/")
         .then(res => setBecas(res.data))
         .catch(err => console.log(err))
     }
@@ -34,7 +34,7 @@ export default function Becas(){
         setActive(activo);
         let code = activo.id;
         axios
-        .put("http://"+Constants.RUTA+"/becas/list/"+code+"/", activo);
+        .put("https://restframeworkbecasandlogin.herokuapp.com/becas/list/"+code+"/", activo);
     }
 
     const display = status => {
